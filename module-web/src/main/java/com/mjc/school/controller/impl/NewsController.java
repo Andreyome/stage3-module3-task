@@ -7,7 +7,6 @@ import com.mjc.school.controller.annotations.CommandParam;
 import com.mjc.school.service.BaseService;
 import com.mjc.school.service.dto.NewsDtoRequest;
 import com.mjc.school.service.dto.NewsDtoResponse;
-import com.mjc.school.service.implementation.NewsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
@@ -25,13 +24,13 @@ public class NewsController implements BaseController<NewsDtoRequest, NewsDtoRes
     }
 
     @Override
-    @CommandHandler(value = "getAllNews")
+    @CommandHandler(value = "readAllNews")
     public List<NewsDtoResponse> readAll() {
         return newsService.readAll();
     }
 
     @Override
-    @CommandHandler(value = "GetNewsById")
+    @CommandHandler(value = "readNewsById")
     public NewsDtoResponse readById(@CommandParam("newsId") Long id) {
         return newsService.readById(id);
     }

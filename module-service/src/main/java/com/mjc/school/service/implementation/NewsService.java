@@ -6,7 +6,6 @@ import com.mjc.school.service.BaseService;
 import com.mjc.school.service.dto.NewsDtoRequest;
 import com.mjc.school.service.dto.NewsDtoResponse;
 import com.mjc.school.service.mapper.NewsMapper;
-import com.mjc.school.service.validation.Validate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -39,7 +38,6 @@ public class NewsService implements BaseService<NewsDtoRequest, NewsDtoResponse,
     }
 
     @Override
-    @Validate
     public NewsDtoResponse create(NewsDtoRequest createRequest) {
         NewsModel newsModel = NewsMapper.INSTANCE.newsDtoToModel(createRequest);
         newsModel.setCreateDate(LocalDateTime.now());
@@ -49,7 +47,6 @@ public class NewsService implements BaseService<NewsDtoRequest, NewsDtoResponse,
     }
 
     @Override
-    @Validate
     public NewsDtoResponse update(NewsDtoRequest updateRequest) {
         NewsModel updatedNews = NewsMapper.INSTANCE.newsDtoToModel(updateRequest);
         updatedNews.setLastUpdateDate(LocalDateTime.now());
@@ -60,5 +57,21 @@ public class NewsService implements BaseService<NewsDtoRequest, NewsDtoResponse,
     @Override
     public boolean deleteById(Long id) {
         return newsRepository.deleteById(id);
+    }
+
+    public List<NewsDtoResponse> readNewsByParams(Optional<List<Long>> tagsIds,Optional<List<String>>tagsNames,Optional<String> authorName, Optional<String> title,Optional<String> content){
+        List<NewsDtoResponse> result= readAll();
+        if(title.isPresent()) {
+            List<NewsDtoResponse> tmp = result.stream().filter(x -> x.getTitle().equals(title.get())).toList();
+            result = tmp;
+        }
+        if (content.isPresent()){
+            List<NewsDtoResponse> tmp = result.stream().filter(x -> x.getContent().equals(content.get())).toList();
+            result=tmp;
+        }
+        if(authorName.isPresent()){
+            List<NewsDtoResponse> tmp = result.stream().filter(x -> x.getAuthorId().equals(authorName.get())).toList();
+        }
+        return result;
     }
 }

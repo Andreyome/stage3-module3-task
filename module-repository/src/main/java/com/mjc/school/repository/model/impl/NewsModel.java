@@ -1,25 +1,49 @@
 package com.mjc.school.repository.model.impl;
 
 import com.mjc.school.repository.model.BaseEntity;
+import org.hibernate.validator.constraints.Length;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.stereotype.Component;
 
+import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Objects;
-
+@Entity
+@Component
+@Table(name = "News")
 public class NewsModel implements BaseEntity<Long> {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    @Column(name = "title",nullable = false)
+    @Length(min = 5,max = 30,message = "Title is incorrect!")
     private String title;
+    @Column(name = "content",nullable = false)
+    @Length(min = 5,max = 255,message = "Content is incorrect!")
     private String content;
+    @Column(name = "createDate",nullable = false)
+    @CreatedDate
     private LocalDateTime createDate;
+    @Column(name = "lastUpdateDate",nullable = false)
+    @LastModifiedDate
     private LocalDateTime lastUpdateDate;
-    private Long authorId;
+    @ManyToOne
+    @JoinColumn(name = "author_id")
+    private AuthorModel authorModel;
+    @ManyToMany(mappedBy = "tags", fetch = FetchType.LAZY)
+    @JoinTable(name = "TagsOfThisNews",joinColumns =@JoinColumn(name = "News_id" ), inverseJoinColumns = @JoinColumn(name = "Tag_id"))
+    private List<TagModel> tagModelList;
+    public NewsModel(){}
 
-    public NewsModel(Long id, String title, String content, LocalDateTime createDate, LocalDateTime lastUpdateDate, long authorId) {
-        this.id = id;
+    public NewsModel(String title, String content, LocalDateTime createDate, LocalDateTime lastUpdateDate, AuthorModel authorModel,List<TagModel> tagModelList) {
         this.title = title;
         this.content = content;
         this.createDate = createDate;
         this.lastUpdateDate = lastUpdateDate;
-        this.authorId = authorId;
+        this.authorModel=authorModel;
+        this.tagModelList=tagModelList;
     }
 
     public String getTitle() {
@@ -54,14 +78,6 @@ public class NewsModel implements BaseEntity<Long> {
         this.lastUpdateDate = lastUpdateDate;
     }
 
-    public Long getAuthorId() {
-        return authorId;
-    }
-
-    public void setAuthorId(Long authorId) {
-        this.authorId = authorId;
-    }
-
     @Override
     public Long getId() {
         return id;
@@ -75,7 +91,7 @@ public class NewsModel implements BaseEntity<Long> {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, title, content, createDate, lastUpdateDate, authorId);
+        return Objects.hash(id, title, content, createDate, lastUpdateDate);
     }
 
     @Override
@@ -86,6 +102,17 @@ public class NewsModel implements BaseEntity<Long> {
         if (!(obj instanceof NewsModel newsModel)) {
             return false;
         }
-        return (Objects.equals(this.id, newsModel.id)) && (this.title.equals(newsModel.title)) && (this.content.equals(newsModel.content)) && (this.lastUpdateDate.equals(newsModel.lastUpdateDate)) && (this.createDate.equals(newsModel.createDate)) && (Objects.equals(this.authorId, newsModel.authorId));
+        return (Objects.equals(this.id, newsModel.id)) && (this.title.equals(newsModel.title)) && (this.content.equals(newsModel.content)) && (this.lastUpdateDate.equals(newsModel.lastUpdateDate)) && (this.createDate.equals(newsModel.createDate));
+    }
+
+    public AuthorModel getAuthorModel() {
+        return authorModel;
+    }
+
+    public void setAuthorModel(AuthorModel authorModel) {
+        this.authorModel = authorModel;
+    }
+    public List<TagModel> getTagModelList(){
+        return tagModelList;
     }
 }

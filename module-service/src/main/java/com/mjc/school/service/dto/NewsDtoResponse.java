@@ -1,6 +1,7 @@
 package com.mjc.school.service.dto;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Objects;
 
 public class NewsDtoResponse {
@@ -10,14 +11,16 @@ public class NewsDtoResponse {
     private LocalDateTime createDate;
     private LocalDateTime lastUpdateDate;
     private Long authorId;
+    private List<TagDtoResponse> tagDtoResponseListList;
 
-    public NewsDtoResponse(Long id, String title, String content, LocalDateTime createDate, LocalDateTime lastUpdateDate, Long authorId) {
+    public NewsDtoResponse(Long id, String title, String content, LocalDateTime createDate, LocalDateTime lastUpdateDate, Long authorId,List<TagDtoResponse> tagDtoResponseListList) {
         this.id = id;
         this.title = title;
         this.content = content;
         this.createDate = createDate;
         this.lastUpdateDate = lastUpdateDate;
         this.authorId = authorId;
+        this.tagDtoResponseListList=tagDtoResponseListList;
     }
 
 
@@ -79,4 +82,11 @@ public class NewsDtoResponse {
         return "News id: " + id + "\n" + "News title: " + title + "\n" + "News content: " + content + "\n" + "News create date: " + createDate + "News last update time: " + lastUpdateDate + "\n" + "News author: " + authorId;
     }
 
+    public List<TagDtoResponse> getTagDtoResponseListList() {
+        return tagDtoResponseListList;
+    }
+
+    public void setTagDtoResponseListList(List<TagDtoResponse> tagDtoResponseListList) {
+        this.tagDtoResponseListList = tagDtoResponseListList;
+    }
 }

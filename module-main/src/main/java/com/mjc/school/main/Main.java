@@ -1,7 +1,6 @@
 package com.mjc.school.main;
 
 import com.mjc.school.controller.ControllerCommands;
-import com.mjc.school.controller.impl.NewsController;
 import com.mjc.school.main.config.AppConfig;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
