@@ -2,7 +2,6 @@ package com.mjc.school.controller;
 
 import com.mjc.school.service.dto.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
@@ -61,7 +60,7 @@ public class ControllerCommands {
                         Scanner scanner = new Scanner(System.in);
                         System.out.println("Write author name:");
                         String tmpName = scanner.nextLine();
-                        System.out.println(authorController.create(new AuthorDtoRequest((long) authorController.readAll().size() + 1, tmpName, LocalDateTime.now(), LocalDateTime.now())));
+                        System.out.println(authorController.create(new AuthorDtoRequest((long) authorController.readAll().size() + 1, tmpName)));
                         isTrue = true;
                     } catch (RuntimeException e) {
                         throw new RuntimeException("Author name is invalid");
@@ -148,7 +147,7 @@ public class ControllerCommands {
                             System.out.println(authorController.readById(id).toString());
                             System.out.println("Write author name:");
                             String authorName = scanner.nextLine();
-                            System.out.println(authorController.update(new AuthorDtoRequest(id, authorName, authorController.readById(id).getCreateDate(), LocalDateTime.now())));
+                            System.out.println(authorController.update(new AuthorDtoRequest(id, authorName)));
                             isTrue = true;
                         } catch (RuntimeException e) {
                             throw new RuntimeException("Author is invalid");
@@ -255,7 +254,7 @@ public class ControllerCommands {
                         try {
                             Scanner scanner = new Scanner(System.in);
                             Long newsId = scanner.nextLong();
-                            List<TagDtoResponse> taglist = newsController.readById(newsId).getTagDtoResponseListList();
+                            List<TagDtoResponse> taglist = newsController.readById(newsId).getTagDtoResponseList();
                             for (TagDtoResponse tagDtoResponse : taglist) {
                                 System.out.println(tagDtoResponse.getName());
                             }
@@ -273,14 +272,14 @@ public class ControllerCommands {
                     String tagName = scanner.nextLine();
                     if(tagName!=null){
                         TagDtoResponse tagSearched = tagController.readAll().stream().filter(tagDtoResponse -> tagDtoResponse.getName().equals(tagName)).findFirst().orElse(null);
-                        result.addAll(newsController.readAll().stream().filter(newsDtoResponse -> newsDtoResponse.getTagDtoResponseListList().contains(tagSearched)).toList());
+                        result.addAll(newsController.readAll().stream().filter(newsDtoResponse -> newsDtoResponse.getTagDtoResponseList().contains(tagSearched)).toList());
                     }
 
                     System.out.println("Write tag id:");
                     Long tagId = scanner.nextLong();
                     if(tagId!=null){
                         TagDtoResponse tagSearched = tagController.readAll().stream().filter(tagDtoResponse -> tagDtoResponse.getId().equals(tagId)).findFirst().orElse(null);
-                        result.addAll(newsController.readAll().stream().filter(newsDtoResponse -> newsDtoResponse.getTagDtoResponseListList().contains(tagSearched)).toList());
+                        result.addAll(newsController.readAll().stream().filter(newsDtoResponse -> newsDtoResponse.getTagDtoResponseList().contains(tagSearched)).toList());
                     }
 
                     System.out.println("Write author name:");

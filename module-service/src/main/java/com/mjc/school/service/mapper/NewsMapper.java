@@ -11,10 +11,15 @@ import org.mapstruct.factory.Mappers;
 @Mapper(uses = TagMapper.class)
 public interface NewsMapper {
     NewsMapper INSTANCE = Mappers.getMapper(NewsMapper.class);
+    @Mappings({
+            @Mapping(target = "authorId", ignore = true),
+    @Mapping(target = "tagDtoResponseList",source = "tagModelList")})
 
     NewsDtoResponse newsToDto(NewsModel newsModel);
 
     @Mappings({
+            @Mapping(target = "authorModel", ignore = true),
+            @Mapping(target = "tagModelList", ignore = true),
             @Mapping(target = "createDate", ignore = true),
             @Mapping(target = "lastUpdateDate", ignore = true)})
     NewsModel newsDtoToModel(NewsDtoRequest newsDtoRequest);

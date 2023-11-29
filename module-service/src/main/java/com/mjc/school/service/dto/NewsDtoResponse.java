@@ -11,16 +11,16 @@ public class NewsDtoResponse {
     private LocalDateTime createDate;
     private LocalDateTime lastUpdateDate;
     private Long authorId;
-    private List<TagDtoResponse> tagDtoResponseListList;
+    private List<TagDtoResponse> tagDtoResponseList;
 
-    public NewsDtoResponse(Long id, String title, String content, LocalDateTime createDate, LocalDateTime lastUpdateDate, Long authorId,List<TagDtoResponse> tagDtoResponseListList) {
+    public NewsDtoResponse(Long id, String title, String content, LocalDateTime createDate, LocalDateTime lastUpdateDate, Long authorId,List<TagDtoResponse> tagDtoResponseList) {
         this.id = id;
         this.title = title;
         this.content = content;
         this.createDate = createDate;
         this.lastUpdateDate = lastUpdateDate;
         this.authorId = authorId;
-        this.tagDtoResponseListList=tagDtoResponseListList;
+        this.tagDtoResponseList =tagDtoResponseList;
     }
 
 
@@ -82,11 +82,11 @@ public class NewsDtoResponse {
         return "News id: " + id + "\n" + "News title: " + title + "\n" + "News content: " + content + "\n" + "News create date: " + createDate + "News last update time: " + lastUpdateDate + "\n" + "News author: " + authorId;
     }
 
-    public List<TagDtoResponse> getTagDtoResponseListList() {
-        return tagDtoResponseListList;
+    public List<TagDtoResponse> getTagDtoResponseList() {
+        return tagDtoResponseList;
     }
 
-    public void setTagDtoResponseListList(List<TagDtoResponse> tagDtoResponseListList) {
-        this.tagDtoResponseListList = tagDtoResponseListList;
+    public void setTagDtoResponseList(List<TagDtoResponse> tagDtoResponseList) {
+        this.tagDtoResponseList = tagDtoResponseList;
     }
 }

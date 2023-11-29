@@ -27,10 +27,10 @@ subprojects {
         testImplementation "org.junit.jupiter:junit-jupiter-api:$jupiterVersion"
         testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:$jupiterVersion"
         implementation group: 'mysql', name: 'mysql-connector-java', version: '8.0.28'
+        implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
         implementation "org.springframework.boot:spring-boot-starter-data-jpa:2.7.7"
         annotationProcessor "org.mapstruct:mapstruct-processor:$mapstructVersion"
         implementation "org.mapstruct:mapstruct:$mapstructVersion"
-        implementation group: 'mysql', name: 'mysql-connector-java', version: '8.0.28'
 
         implementation "org.hibernate.validator:hibernate-validator:7.0.2.Final"
 
