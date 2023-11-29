@@ -1,7 +1,7 @@
 package com.mjc.school.repository.model.impl;
 
 import com.mjc.school.repository.model.BaseEntity;
-import org.hibernate.validator.constraints.Length;
+import jakarta.validation.constraints.Size;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
@@ -16,9 +16,9 @@ public class TagModel implements BaseEntity<Long> {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     @Column(name = "name",nullable = false)
-    @Length(min = 3,max = 15,message = "Name is incorrect!")
+    @Size(min = 3,max = 15,message = "Name is incorrect!")
     private String name;
-    @ManyToMany(mappedBy = "TagsOfThisNews", fetch = FetchType.LAZY)
+    @ManyToMany(mappedBy = "tagModelList", fetch = FetchType.LAZY)
     private List<NewsModel> newsModelList;
     public void TagModel(){}
     public void TagModel(String name,List<NewsModel> newsModelList){

@@ -1,7 +1,7 @@
 package com.mjc.school.repository.model.impl;
 
 import com.mjc.school.repository.model.BaseEntity;
-import org.hibernate.validator.constraints.Length;
+import jakarta.validation.constraints.Size;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.stereotype.Component;
@@ -18,10 +18,10 @@ public class NewsModel implements BaseEntity<Long> {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     @Column(name = "title",nullable = false)
-    @Length(min = 5,max = 30,message = "Title is incorrect!")
+    @Size(min = 5,max = 30,message = "Title is incorrect!")
     private String title;
     @Column(name = "content",nullable = false)
-    @Length(min = 5,max = 255,message = "Content is incorrect!")
+    @Size(min = 5,max = 255,message = "Content is incorrect!")
     private String content;
     @Column(name = "createDate",nullable = false)
     @CreatedDate
@@ -32,8 +32,8 @@ public class NewsModel implements BaseEntity<Long> {
     @ManyToOne
     @JoinColumn(name = "author_id")
     private AuthorModel authorModel;
-    @ManyToMany(mappedBy = "tags", fetch = FetchType.LAZY)
-    @JoinTable(name = "TagsOfThisNews",joinColumns =@JoinColumn(name = "News_id" ), inverseJoinColumns = @JoinColumn(name = "Tag_id"))
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "news_tags",joinColumns =@JoinColumn(name = "news_id" ), inverseJoinColumns = @JoinColumn(name = "tag_id"))
     private List<TagModel> tagModelList;
     public NewsModel(){}
 

@@ -1,7 +1,7 @@
 package com.mjc.school.repository.model.impl;
 
 import com.mjc.school.repository.model.BaseEntity;
-import org.hibernate.validator.constraints.Length;
+import jakarta.validation.constraints.Size;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.stereotype.Component;
@@ -17,8 +17,8 @@ public class AuthorModel implements BaseEntity<Long> {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    @Column(name = "name",length = 15,nullable = false)
-    @Length(min = 3,max = 15,message = "Name is incorrect!")
+    @Column(name = "name",nullable = false)
+    @Size(min = 3,max = 15,message = "Name is incorrect!")
     private String name;
     @Column(name = "createDate",nullable = false)
     @CreatedDate
